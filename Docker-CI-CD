@@ -1,11 +1,20 @@
 node{
 stage('SCM checkout'){
-  git 'https://github.com/javahometech/my-app' 
+  git 'https://github.com/javatech/my-app' 
 }
 stage('Maven Package'){
+  sh 'maven clean package'
+  sh 'mv target/my-app*.war target/my-app.war'
 }
-stage('Build Docker image'){}
-stage('Push to Docker Hub'){}
+stage('Build Docker image'){
+  sh 'docker build -t aruna/my-app:0.0.1 .' 
+}
+stage('Push to Docker Hub'){
+  with Credentials([string(CredentialsID: 'github-pwd', variable: 'dockerHubPwd')]) {
+  sh "docker login -u aruna -p ${dockerhubpwd}"
+  }
+  sh 'docker push aruna/my-app:0.0.1 .' 
+}
 stage('Remove Previous container'){}
 stage('Deploy to Dev environment'){}
 }
