@@ -1,1 +1,11 @@
-
+node{
+stage('SCM checkout'){
+  git 'https://github.com/javahometech/my-app' 
+}
+stage('Maven Package'){
+}
+stage('Build Docker image'){}
+stage('Push to Docker Hub'){}
+stage('Remove Previous container'){}
+stage('Deploy to Dev environment'){}
+}
