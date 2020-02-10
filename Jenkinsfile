@@ -12,6 +12,28 @@ node{
       sh "${mvnHome}/bin/mvn sonar:sonar"
     }
   }
+  stage('quality gate status check'){
+    timeout(time: 1, unit:hours) {
+      def qg =waitForQualityGate()
+      if (qg.status != 'OK'){
+        slackSend baseUrl: 'https://hooks.slack.com/services/',
+       channel: '#jenkins-pipeline-demo',
+       color: 'danger', 
+       message: 'Sonarqube analysis failed', 
+       teamDomain: 'javahomecloud',
+       tokenCredentialId: 'slack-demo'
+        error "Pipeline aborted due to quality gate failure: ${qg.status}"
+      }
+    }
+  }
   stage('Email Notification'){
   }
+  stage('Slack Notification'){
+       slackSend baseUrl: 'https://hooks.slack.com/services/',
+       channel: '#jenkins-pipeline-demo',
+       color: 'good', 
+       message: 'Welcome to Jenkins, Slack!', 
+       teamDomain: 'javahomecloud',
+       tokenCredentialId: 'slack-demo'
+   }
 }
