@@ -26,6 +26,11 @@ node{
       }
     }
   }
+  stage('deploy to tomcat'){
+    sshagent(tomcat-dev){
+      sh 'scp -o StrictHostKeyChecking=no target/*.war ec2-user@172.31.29.242:/opt/tomcat8/webapps/'
+    }
+  }
   stage('Email Notification'){
   }
   stage('Slack Notification'){
