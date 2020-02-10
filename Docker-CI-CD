@@ -15,6 +15,21 @@ stage('Push to Docker Hub'){
   }
   sh 'docker push aruna/my-app:0.0.1 .' 
 }
-stage('Remove Previous container'){}
-stage('Deploy to Dev environment'){}
+stage('Remove Previous container'){
+  try{
+  
+    def dockerrm = 'docker rm -f my-app'
+    sshAgent([docker-dev]){
+      sh "ssh -o StricktHostKeyChecking=no, ec2-user@172.31.17.196 ${dockerRm}"
+    }
+  }catch(error){
+    // do nothing 
+  }
+}
+stage('Deploy to Dev environment'){
+def dockerRun = 'docker run -d -p 8080:8080 --name my-app aruna/my-app:0.0.1 '
+   sshagent(['docker-dev']) {
+    sh "ssh -o StrictHostKeyChecking=no ec2-user@172.31.17.196 ${dockerRun}"
+   }
+}
 }
