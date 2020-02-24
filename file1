@@ -1,1 +1,16 @@
-this is a test file
+launch Ubuntu machine 
+Uodate package manager
+sudo apt update
+install java 
+sudo apt install openjdk-8-jdk
+install Jenkins
+  Add the necessary repository with the command 
+  sudo sh -c 'echo deb http://pkg.jenkins.io/debian-stable binary/ > /etc/apt/sources.list.d/jenkins.list'.
+  Add the universe repository with the command 
+  sudo add-apt-repository universe.
+  Update apt with the command
+  sudo apt-get update.
+  Install Jenkins with the command
+  sudo apt-get install jenkins -y.
+  Allow the installation to complete.
+  sudo systemctl status jenkins
