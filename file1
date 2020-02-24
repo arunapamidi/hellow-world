@@ -17,5 +17,18 @@ install Jenkins
   Allow the installation to complete.
   sudo systemctl status jenkins
 Install Docker 
-  sudo install docker.io -y
+  sudo apt install docker.io -y
 Add jenkins user to Docker group
+ sudo usermod -aG docker jenkins
+ Plugins used in Jenkins
+ 
+ sshagent
+ 
+ 
+ # launch another ubuntu machine for deployment server.
+ instlal java 
+ install docker
+ add ubuntu user to Docker griup.
+  sudo usermod -aG docker ubuntu
+ exit and relogin.
+ 
